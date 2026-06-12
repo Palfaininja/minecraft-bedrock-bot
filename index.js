@@ -19,7 +19,7 @@ function createBot() {
     port: 61518,                  // <-- 2. Put your real 5-digit port here (no quotes)
     username: 'ServerBot247',
     offline: true,
-    version: '1.26.23.1',            // <--  3. Make sure this matches your exact Aternos version
+    version: '1.26.23',            // <--  3. Make sure this matches your exact Aternos version
     viewDistance: 2               
   });
 
