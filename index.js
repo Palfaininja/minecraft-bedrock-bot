@@ -10,13 +10,14 @@ server.listen(process.env.PORT || 3000);
 
 function createBot() {
   console.log('Connecting bot to Bedrock server...');
-  
+  be
   const client = bedrock.createClient({
-    host: 'Pikachu5963.aternos.me', // 1. Put your Aternos IP here
-    port: 61518,             // 2. Put your Aternos Port here
+    host: 'Pikachu5963.aternos.me',      // 1. Put your Aternos IP here
+    port: 61518,                  // 2. Put your Aternos Port here
     username: 'ServerBot247',
     offline: true,
-    viewDistance: 2          // Reduces lag so Render doesn't crash the bot
+    version: '1.26.23.1',            // 3. REPLACE WITH YOUR EXACT ATERNOS VERSION
+    viewDistance: 2          
   });
 
   client.on('join', () => {
@@ -34,3 +35,4 @@ function createBot() {
 }
 
 createBot();
+
