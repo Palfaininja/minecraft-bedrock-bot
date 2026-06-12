@@ -1,40 +1,40 @@
 const bedrock = require('bedrock-protocol');
 const http = require('http');
 
-// 1. This dummy server keeps Render's Free Web Service happy!
+// Free Tier Web Service Server
 const server = http.createServer((req, res) => {
   res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Minecraft Bot is running online!\n');
+  res.end('Minecraft Bedrock Bot is Live!\n');
 });
-
 const PORT = process.env.PORT || 3000;
-server.listen(PORT, () => {
-  console.log(`Web server listening on port ${PORT}`);
-});
+server.listen(PORT);
 
-// 2. Your actual Bedrock Minecraft Bot code
 function createBot() {
-  console.log('Connecting bot to Bedrock server...');
+  console.log('Sending direct RakNet connection to Aternos...');
   
   const client = bedrock.createClient({
-    host: 'Pikachu5963.aternos.me', // Put your exact Aternos IP here
-    port: 61518,                  // Put your Aternos Port here
-    username: 'ServerBot247',     
-    offline: true                 
+    host: 'Pikachu5963.aternos.me', // 1. Put your Aternos IP here
+    port: 61518,             // 2. Put your Aternos Port here 
+    username: 'ServerBot247',
+    offline: true,
+    // Forces the cloud server to talk exactly like a real Bedrock app
+    raknetBackend: 'raknet-javascript', 
+    skipPing: true           // Tells the bot to stop pinging and skip the firewall block
   });
 
   client.on('join', () => {
-    console.log('Success: The Bedrock bot has joined the server!');
+    console.log('Success: The Bedrock bot has cracked the firewall and joined!');
   });
 
   client.on('close', () => {
-    console.log('Bot disconnected. Reconnecting in 15 seconds...');
+    console.log('Connection closed. Retrying in 15 seconds...');
     setTimeout(createBot, 15000);
   });
 
   client.on('error', (err) => {
-    console.log('Error:', err.message);
+    console.log('Network Log:', err.message);
   });
 }
 
 createBot();
+
