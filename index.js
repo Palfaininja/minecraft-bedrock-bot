@@ -1,25 +1,31 @@
 const bedrock = require('bedrock-protocol');
 const http = require('http');
 
-// Dummy server to keep Render's Free Tier happy
+// Enhanced web server to keep Render's Free Web Tier completely stable
 const server = http.createServer((req, res) => {
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.end('Minecraft Bot Hub\n');
+  console.log(`Received ping on path: ${req.url}`);
+  res.writeHead(200, { 
+    'Content-Type': 'text/plain',
+    'Connection': 'keep-alive'
+  });
+  res.end('Minecraft Bot Hub is Online and Healthy!\n');
 });
 
-server.listen(process.env.PORT || 3000, () => {
-  console.log('Web server listening for uptime pings');
+// Listen on the port Render assigns us
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`Web server successfully bound to port ${PORT}`);
 });
 
 function createBot() {
   console.log('Connecting bot to Bedrock server...');
   
   const client = bedrock.createClient({
-    host: 'Pikachu5963.aternos.me',      // <-- 1. Put your real Aternos IP here inside quotes
-    port: 61518,                  // <-- 2. Put your real 5-digit port here (no quotes)
+    host: 'Pikachu5963.aternos.me', 
+    port: 61518,                  
     username: 'ServerBot247',
     offline: true,
-    version: '1.26.20',            // <--  3. Make sure this matches your exact Aternos version
+    version: '1.26.20',            // Tricking the server to bypass 1.26.23 sub-version check
     viewDistance: 2               
   });
 
@@ -28,12 +34,12 @@ function createBot() {
   });
 
   client.on('close', () => {
-    console.log('Disconnected. Reconnecting in 15 seconds...');
+    console.log('Disconnected from Minecraft. Reconnecting in 15 seconds...');
     setTimeout(createBot, 15000);
   });
 
   client.on('error', (err) => {
-    console.log('Network status:', err.message);
+    console.log('Network status error:', err.message);
   });
 }
 
